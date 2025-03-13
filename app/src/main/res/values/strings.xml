@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MySimpleNotif_8A</string>
+    <string name="send_notif">Send Notif</string>
+    <string name="notification_title">Pemrograman Android Adavnce</string>
+    <string name="notification_message">Mari Belajar Materi Notification</string>
+    <string name="notification_subtext">Reminder</string>
+</resources>
