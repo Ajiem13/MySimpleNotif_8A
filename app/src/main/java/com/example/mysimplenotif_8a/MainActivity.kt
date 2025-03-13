@@ -54,7 +54,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendNotification(title: String, message: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://pijar.petik.or.id"))
-        val pendingIntent = PendingIntent.getActivity(this,0,intent,if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
         )
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -62,23 +64,26 @@ class MainActivity : AppCompatActivity() {
             .setContentTitle(title)
             .setSmallIcon(R.drawable.ic_baseline_circle_notifications_24)
             .setContentText(message)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(Notification.DEFAULT_ALL)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setSubText(getString(R.string.notification_subtext))
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(
-                    CHANNEL_ID,
-                    CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
-                builder.setChannelId(CHANNEL_ID)
-                notificationManager.createNotificationChannel(channel)
-            }
-            val notification = builder.build()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val notification = builder.build()
         notificationManager.notify(NOTIFICATION_ID, notification)
     }
+
+
 
     companion object {
         private const val NOTIFICATION_ID = 1
